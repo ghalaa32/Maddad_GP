@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مدد | أسئلة المتابعة</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-main" onload="loadFollowupPage()">
+  <div class="bg-blur bg-blur-top"></div>
+  <div class="bg-blur bg-blur-bottom"></div>
+
+  <div class="form-page">
+    <div class="top-bar simple-top">
+      <button class="back-btn" onclick="window.location.href='result.html'">العودة</button>
+      <img src="logo.png" class="logo top-logo centered-logo" alt="شعار مدد" />
+      <div class="top-space"></div>
+    </div>
+
+    <div class="auth-card questionnaire-card">
+      <h1 class="auth-title">أسئلة المتابعة</h1>
+      <p class="auth-subtitle">
+        نحتاج بعض التفاصيل الإضافية لتحسين دقة النتيجة.
+      </p>
+
+      <form id="followupForm" onsubmit="submitFollowup(event)">
+        <div id="followupContainer"></div>
+        <p id="followupError" class="form-error"></p>
+        <button type="submit" class="main-btn full-btn">إعادة التقييم</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
