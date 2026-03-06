@@ -1,95 +1,169 @@
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Tahoma,Arial;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Tahoma, Arial, sans-serif;
 }
 
 body{
-background:#EEF1F7;
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at top right, rgba(145, 166, 205, 0.35), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(221, 178, 191, 0.30), transparent 28%),
+    linear-gradient(135deg, #EEF1F7 0%, #F4F5F8 100%);
+}
+
+/* طبقة ضبابية خفيفة إضافية */
+body::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 85% 12%, rgba(177, 194, 224, 0.22), transparent 18%),
+    radial-gradient(circle at 10% 88%, rgba(221, 177, 188, 0.18), transparent 16%);
+  filter:blur(18px);
+  pointer-events:none;
 }
 
 .container{
-width:100%;
-max-width:900px;
-background:white;
-border-radius:30px;
-padding:40px;
-box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  width:100%;
+  max-width:900px;
+  background:rgba(255,255,255,0.92);
+  border-radius:30px;
+  padding:40px;
+  box-shadow:0 15px 35px rgba(70, 85, 115, 0.12);
+  border:1px solid rgba(86, 111, 152, 0.08);
+  position:relative;
+  z-index:1;
+  backdrop-filter:blur(6px);
 }
 
 .welcome-section{
-text-align:center;
-margin-bottom:40px;
+  text-align:center;
+  margin-bottom:40px;
 }
 
 /* الشعار */
-
 .logo{
-width:220px;
-margin-bottom:30px;
+  width:220px;
+  margin-bottom:30px;
+  height:auto;
 }
 
 .welcome-title{
-font-size:36px;
-margin-bottom:15px;
-color:#2F3443;
-font-weight:bold;
+  font-size:36px;
+  margin-bottom:15px;
+  color:#2F3443;
+  font-weight:bold;
+  line-height:1.5;
 }
 
 .welcome-text{
-font-size:20px;
-color:#555;
-line-height:1.8;
+  font-size:20px;
+  color:#666F7F;
+  line-height:1.8;
+  max-width:680px;
+  margin:0 auto;
 }
 
 .user-heading{
-text-align:center;
-font-size:26px;
-color:#566F98;
-margin-bottom:25px;
-font-weight:bold;
+  text-align:center;
+  font-size:26px;
+  color:#566F98;
+  margin-bottom:25px;
+  font-weight:bold;
 }
 
 .role-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
 }
 
 .role-card{
-background:#F8F9FC;
-border-radius:18px;
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-cursor:pointer;
-border:2px solid transparent;
-transition:0.2s;
+  background:#F8F9FC;
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  border:2px solid #E3E8F1;
+  transition:0.25s ease;
 }
 
 .role-card:hover{
-transform:translateY(-3px);
-border-color:#566F98;
+  transform:translateY(-4px);
+  border-color:#566F98;
+  box-shadow:0 10px 20px rgba(86,111,152,0.10);
+}
+
+.role-card.parent{
+  background:linear-gradient(135deg, #F8F9FC 0%, #F2F5FA 100%);
+}
+
+.role-card.child{
+  background:linear-gradient(135deg, #F8F9FC 0%, #FBF5F7 100%);
 }
 
 .role-text h3{
-font-size:20px;
-margin-bottom:5px;
-color:#2F3443;
+  font-size:20px;
+  margin-bottom:5px;
+  color:#2F3443;
 }
 
 .role-text p{
-font-size:14px;
-color:#777;
+  font-size:14px;
+  color:#777F8F;
 }
 
 .icon{
-font-size:35px;
+  font-size:35px;
+  width:72px;
+  height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:18px;
+  flex-shrink:0;
+}
+
+.parent .icon{
+  background:#EEF2F8;
+}
+
+.child .icon{
+  background:#F7EEF1;
+}
+
+@media (max-width: 768px){
+  .container{
+    padding:28px 20px;
+  }
+
+  .welcome-title{
+    font-size:28px;
+  }
+
+  .welcome-text{
+    font-size:17px;
+  }
+
+  .user-heading{
+    font-size:22px;
+  }
+
+  .role-grid{
+    grid-template-columns:1fr;
+  }
+
+  .logo{
+    width:180px;
+  }
 }
