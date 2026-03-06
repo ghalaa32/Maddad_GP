@@ -754,6 +754,7 @@
       <div id="resultCircle" class="risk-circle"></div>
       <h2 id="resultTitle"></h2>
       <p id="resultDesc"></p>
+   <div id="followupContainer"></div>
 
       <!-- Model probabilities bar -->
       <div id="modelProbs" style="margin:20px auto 0;max-width:360px;text-align:right;">
@@ -795,6 +796,7 @@
 </div>
 
 <!-- ===== FOLLOWUP PAGE ===== -->
+
 <div class="page" id="followup">
   <nav class="navbar">
     <div class="logo" onclick="goTo('dashboard')" style="cursor:pointer;">
@@ -888,6 +890,7 @@
   // Replicates the multi-class risk scoring of the uploaded XGBClassifier
   // Classes: 0 = Low Risk, 1 = Medium Risk, 2 = High Risk
   // Critical items (higher weight): Q1 (name), Q2 (eye contact), Q6 (pointing), Q8 (joint attn)
+        let finalNameResponse = null; 
   function runModel(answers) {
     // answers: array of 10 values, 1=Yes, 0=No
     const weights = [1.5, 1.8, 1.0, 1.0, 1.0, 1.5, 1.0, 1.3, 1.0, 1.0];
@@ -931,7 +934,11 @@
   }
 
   // ===== RESULTS RENDERER =====
+\
   function renderResults() {
+  if (finalNameResponse !== null) {
+    userAnswers[0] = finalNameResponse;
+}
     const result = runModel(userAnswers);
     const pred = result.pred;
     const probs = result.probs;
@@ -1061,7 +1068,7 @@
       if (currentQ < 10) {
         updateQuestion();
       } else {
-        goTo('results');
+        goTo('followup');
       }
     }, 400);
   }
@@ -1076,6 +1083,60 @@
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 3000);
   }
+        // ===== FOLLOWUP LOGIC =====
+
+function startFollowup(){
+
+  const container = document.getElementById("followupContainer");
+
+  container.innerHTML = `
+    <div class="followup-box">
+      <h3>هل يستجيب الطفل لاسمه؟</h3>
+
+      <button onclick="followupNo()">لا</button>
+      <button onclick="followupYes()">نعم</button>
+    </div>
+  `;
+
+}
+
+function followupNo(){
+
+  const container = document.getElementById("followupContainer");
+
+  container.innerHTML = `
+    <div class="followup-box">
+      <h3>هل يستجيب الطفل لاسمه أحيانًا في مواقف أخرى؟</h3>
+
+      <button onclick="finishFollowup(1)">نعم</button>
+      <button onclick="finishFollowup(0)">لا</button>
+    </div>
+  `;
+
+}
+
+function followupYes(){
+
+  const container = document.getElementById("followupContainer");
+
+  container.innerHTML = `
+    <div class="followup-box">
+      <h3>هل الاستجابة بسبب تعرف الطفل على اسمه وليس بسبب الصوت أو نبرة الصوت؟</h3>
+
+      <button onclick="finishFollowup(1)">نعم</button>
+      <button onclick="finishFollowup(0)">لا</button>
+    </div>
+  `;
+
+}
+
+function finishFollowup(answer){
+
+  finalNameResponse = answer;
+
+  renderResults();
+
+}
 </script>
 </body>
 </html>
