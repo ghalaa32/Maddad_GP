@@ -387,14 +387,10 @@ body{
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
-.questionnaire-page-body{
-  margin: 0;
-  min-height: 100vh;
-  background: #F3F8FF;
-  font-family: "Cairo", sans-serif;
-  overflow-x: hidden;
+.questionnaire-page-body,
+.questionnaire-page-body *{
+  font-family: "Cairo", sans-serif !important;
 }
-
 .questionnaire-page{
   min-height: 100vh;
   width: 100%;
@@ -404,9 +400,14 @@ body{
 .questionnaire-header{
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   direction: ltr;
   margin-bottom: 40px;
+  background: #FFFFFF;
+  height: 86px;
+  padding: 0 22px;
+  border-bottom: 1px solid #E2E8F2;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
 }
 
 .questionnaire-back{
@@ -421,10 +422,12 @@ body{
 }
 
 .questionnaire-logo{
-  width: 78px;
+  width: 86px;
   height: auto;
   object-fit: contain;
+  display: block;
 }
+
 
 .questionnaire-main{
   max-width: 920px;
