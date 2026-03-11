@@ -384,211 +384,183 @@ body{
 /* =========================
    QUESTIONNAIRE 
 ========================= */
+
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
-.questionnaire-screen,
-.questionnaire-screen *{
+.questionnaire-page-body{
+  margin: 0;
+  min-height: 100vh;
+  background: #F3F8FF;
   font-family: "Cairo", sans-serif;
+  overflow-x: hidden;
 }
 
-.questionnaire-screen{
-  padding: 0 24px 40px;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-
-.q-top-header{
-  position: relative;
-  z-index: 2;
+.questionnaire-page{
+  min-height: 100vh;
   width: 100%;
-  min-height: 88px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 0 0;
+  padding: 18px 20px 40px;
 }
 
-.q-back-btn{
+.questionnaire-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  direction: ltr;
+  margin-bottom: 40px;
+}
+
+.questionnaire-back{
   border: none;
   background: transparent;
-  color: #7d7a87;
+  color: #7D7A87;
   font-size: 42px;
-  line-height: 1;
   cursor: pointer;
-  padding: 0 8px;
-  box-shadow: none;
+  font-family: "Cairo", sans-serif;
+  line-height: 1;
+  padding: 0;
 }
 
-.q-header-logo{
-  width: 92px;
+.questionnaire-logo{
+  width: 78px;
   height: auto;
   object-fit: contain;
 }
 
-.q-flow-wrap{
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 980px;
-  margin: 70px auto 0;
+.questionnaire-main{
+  max-width: 920px;
+  margin: 0 auto;
   text-align: center;
 }
 
-.q-main-title{
-  font-size: 64px;
-  line-height: 1.35;
-  color: #1f1d25;
+.questionnaire-main-title{
+  margin: 50px 0 38px;
+  font-size: 38px;
   font-weight: 600;
-  margin-bottom: 62px;
+  line-height: 1.7;
+  color: #1E1B24;
 }
 
-.q-progress{
-  color: #2f59a7;
-  font-size: 22px;
+.questionnaire-progress{
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 24px;
+  color: #3559A8;
+  margin-bottom: 22px;
 }
 
-.q-card{
-  max-width: 640px;
+.questionnaire-card{
+  max-width: 600px;
   margin: 0 auto;
 }
 
-.q-question-title{
-  font-size: 28px;
-  color: #1f1d25;
+.questionnaire-question{
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 18px;
-  line-height: 1.8;
+  color: #1E1B24;
+  margin: 0 0 24px;
+  text-align: center;
 }
 
-.q-question-desc{
-  font-size: 20px;
+.questionnaire-description{
+  font-size: 17px;
   line-height: 2;
-  color: #2e3340;
-  margin-bottom: 30px;
+  color: #2B2B2B;
+  margin: 0 0 22px;
 }
 
-.q-options{
+.questionnaire-options{
   display: flex;
   flex-direction: column;
   gap: 22px;
-  margin-bottom: 42px;
+  margin-bottom: 28px;
 }
 
-.q-option-btn{
+.questionnaire-option{
   width: 100%;
-  min-height: 76px;
+  min-height: 68px;
   border: none;
-  border-radius: 12px;
-  background: #ffffff;
-  color: #202020;
-  font-size: 20px;
-  font-weight: 600;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: #222;
+  font-family: "Cairo", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 10px 28px rgba(90, 104, 126, 0.18);
+  box-shadow: 0 10px 24px rgba(118, 130, 154, 0.22);
   transition: 0.2s ease;
-  padding: 18px 24px;
 }
 
-.q-option-btn:hover{
-  transform: translateY(-1px);
+.questionnaire-option.selected{
+  background: #AAB9D3;
+  color: #FFFFFF;
 }
 
-.q-option-btn.selected{
-  background: #a7b8d4;
-  color: #ffffff;
-}
-
-.q-actions{
+.questionnaire-next-wrap{
   display: flex;
   justify-content: center;
+  margin-top: 34px;
 }
 
-.q-next-btn{
-  min-width: 210px;
-  height: 66px;
+.questionnaire-next-btn{
+  min-width: 160px;
+  height: 54px;
   border: none;
   border-radius: 999px;
-  background: #6f8fc3;
-  color: #ffffff;
-  font-size: 22px;
+  background: #6E89BC;
+  color: #FFFFFF;
+  font-family: "Cairo", sans-serif;
+  font-size: 18px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(111, 143, 195, 0.28);
-  transition: 0.2s ease;
-  padding: 0 28px;
 }
 
-.q-next-btn:hover{
-  transform: translateY(-1px);
-}
-
-.q-error{
-  min-height: 30px;
-  margin: 8px 0 18px;
-  font-size: 16px;
-}
-
-@media (max-width: 1100px){
-  .q-main-title{
-    font-size: 48px;
-  }
+.questionnaire-error{
+  min-height: 24px;
+  margin: 8px 0 0;
+  color: #C0392B;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 @media (max-width: 768px){
-  .questionnaire-screen{
-    padding: 0 16px 30px;
+  .questionnaire-page{
+    padding: 16px 14px 30px;
   }
 
-  .q-top-header{
-    min-height: 74px;
-    padding-top: 12px;
+  .questionnaire-main-title{
+    font-size: 28px;
+    line-height: 1.8;
+    margin: 35px 0 28px;
   }
 
-  .q-header-logo{
-    width: 74px;
+  .questionnaire-progress{
+    font-size: 16px;
   }
 
-  .q-back-btn{
-    font-size: 34px;
-  }
-
-  .q-flow-wrap{
-    margin-top: 38px;
-  }
-
-  .q-main-title{
-    font-size: 31px;
-    margin-bottom: 34px;
-    line-height: 1.6;
-  }
-
-  .q-progress{
-    font-size: 18px;
-    margin-bottom: 18px;
-  }
-
-  .q-question-title{
-    font-size: 24px;
-    margin-bottom: 14px;
-  }
-
-  .q-question-desc{
-    font-size: 17px;
-    margin-bottom: 22px;
-  }
-
-  .q-option-btn{
-    min-height: 66px;
-    font-size: 18px;
-    padding: 16px 18px;
-  }
-
-  .q-next-btn{
-    min-width: 170px;
-    height: 58px;
+  .questionnaire-question{
     font-size: 20px;
+  }
+
+  .questionnaire-description{
+    font-size: 15px;
+  }
+
+  .questionnaire-option{
+    min-height: 62px;
+    font-size: 17px;
+  }
+
+  .questionnaire-next-btn{
+    min-width: 140px;
+    height: 50px;
+    font-size: 17px;
+  }
+
+  .questionnaire-logo{
+    width: 68px;
+  }
+
+  .questionnaire-back{
+    font-size: 34px;
   }
 }
 
