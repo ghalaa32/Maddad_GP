@@ -920,6 +920,16 @@ function finalizeFollowup() {
   assessment.finalScore = finalScore;
   assessment.finalRisk = finalRisk;
   assessment.followupComplete = true;
+   \\ اضافة غلا علشان الداشبورد
+  let history = JSON.parse(localStorage.getItem("maddadHistory")) || [];
+
+history.push({
+date: new Date().toLocaleDateString("ar-SA"),
+risk: riskTextArabic(finalRisk),
+score: finalScore
+});
+
+localStorage.setItem("maddadHistory", JSON.stringify(history));
 
   saveAssessment(assessment);
   window.location.href = "result.html";
