@@ -1,958 +1,1022 @@
-function goParent() {
-  window.location.href = "parent.html";
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Tahoma, Arial, sans-serif;
 }
 
-function goChild() {
-  window.location.href = "child.html";
+body{
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
 }
 
-function showSignup() {
-  document.getElementById("loginBox").style.display = "none";
-  document.getElementById("signupBox").style.display = "block";
+.bg-main{
+  background: linear-gradient(135deg, #f6f7fb 0%, #eef2ff 45%, #fff6fb 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
 
-function showLogin() {
-  document.getElementById("signupBox").style.display = "none";
-  document.getElementById("loginBox").style.display = "block";
+.bg-blur{
+  position:fixed;
+  border-radius:50%;
+  filter:blur(90px);
+  opacity:0.55;
+  z-index:0;
+  pointer-events:none;
 }
 
-function parentSignup() {
-  const childName = document.getElementById("signupChildName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const password = document.getElementById("signupPassword").value.trim();
-
-  if (!childName || !email || !password) {
-    alert("فضلاً عبئي جميع الحقول");
-    return;
-  }
-
-  const account = {
-    childName: childName,
-    email: email,
-    password: password
-  };
-
-  localStorage.setItem("maddadAccount", JSON.stringify(account));
-  localStorage.setItem("maddadLoggedIn", "true");
-
-  window.location.href = "home.html";
+.bg-blur-top{
+  width:320px;
+  height:320px;
+  top:-80px;
+  right:-80px;
+  background:#8da2c9;
 }
 
-function parentLogin() {
-  const email = document.getElementById("parentLoginEmail").value.trim();
-  const password = document.getElementById("parentLoginPassword").value.trim();
-
-  const savedAccount = JSON.parse(localStorage.getItem("maddadAccount"));
-
-  if (!email || !password) {
-    alert("فضلاً أدخلي البريد الإلكتروني وكلمة المرور");
-    return;
-  }
-
-  if (!savedAccount) {
-    alert("لا يوجد حساب محفوظ حالياً. أنشئي حساب أولاً");
-    return;
-  }
-
-  if (email === savedAccount.email && password === savedAccount.password) {
-    localStorage.setItem("maddadLoggedIn", "true");
-    window.location.href = "home.html";
-  } else {
-    alert("البريد الإلكتروني أو كلمة المرور غير صحيحة");
-  }
+.bg-blur-bottom{
+  width:300px;
+  height:300px;
+  bottom:-90px;
+  left:-70px;
+  background:#d8a8b8;
 }
 
-function childLogin() {
-  const email = document.getElementById("childLoginEmail").value.trim();
-  const password = document.getElementById("childLoginPassword").value.trim();
-
-  const savedAccount = JSON.parse(localStorage.getItem("maddadAccount"));
-
-  if (!email || !password) {
-    alert("فضلاً أدخل البريد الإلكتروني وكلمة المرور");
-    return;
-  }
-
-  if (!savedAccount) {
-    alert("لا يوجد حساب محفوظ حالياً");
-    return;
-  }
-
-  if (email === savedAccount.email && password === savedAccount.password) {
-    alert("تم تسجيل الدخول بنجاح. لاحقًا بنربطها بصفحة الألعاب");
-    // لاحقًا:
-    // window.location.href = "games.html";
-  } else {
-    alert("بيانات الدخول غير صحيحة");
-  }
+.container,
+.auth-wrapper,
+.home-page{
+  position:relative;
+  z-index:2;
+  width:100%;
 }
 
-function loadHomePage() {
-  const loggedIn = localStorage.getItem("maddadLoggedIn");
-  const savedAccount = JSON.parse(localStorage.getItem("maddadAccount"));
-
-  if (loggedIn !== "true" || !savedAccount) {
-    window.location.href = "parent.html";
-    return;
-  }
-
-  const welcomeMessage = document.getElementById("welcomeMessage");
-  const childNameText = document.getElementById("childNameText");
-  const emailText = document.getElementById("emailText");
-
-  if (welcomeMessage) {
-    welcomeMessage.textContent = "أهلًا ولي أمر " + savedAccount.childName;
-  }
-
-  if (childNameText) {
-    childNameText.textContent = savedAccount.childName;
-  }
-
-  if (emailText) {
-    emailText.textContent = savedAccount.email;
-  }
+.container{
+  max-width:900px;
+  background:rgba(255,255,255,0.92);
+  border-radius:30px;
+  padding:40px;
+  box-shadow:0 15px 35px rgba(58, 67, 92, 0.12);
+  backdrop-filter:blur(8px);
 }
 
-function logout() {
-  localStorage.removeItem("maddadLoggedIn");
-  window.location.href = "index.html";
+.welcome-section{
+  text-align:center;
+  margin-bottom:40px;
 }
 
-function startQuestionnaire() {
-  window.location.href = "questionnaire.html";
+.logo{
+  display:block;
+  max-width:220px;
+  width:100%;
+  height:auto;
+  margin:0 auto 28px;
+}
+
+.welcome-title{
+  font-size:36px;
+  margin-bottom:15px;
+  color:#2f3443;
+  font-weight:bold;
+}
+
+.welcome-text{
+  font-size:20px;
+  color:#5f6472;
+  line-height:1.9;
+  max-width:650px;
+  margin:0 auto;
+}
+
+.user-heading{
+  text-align:center;
+  font-size:26px;
+  color:#6b7fa8;
+  margin-bottom:25px;
+  font-weight:bold;
+}
+
+.role-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.role-card{
+  background:rgba(255,255,255,0.75);
+  border-radius:20px;
+  padding:24px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+  border:2px solid transparent;
+  transition:0.25s ease;
+  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+.role-card:hover{
+  transform:translateY(-4px);
+  border-color:#8da2c9;
+  box-shadow:0 14px 28px rgba(0,0,0,0.08);
+}
+
+.role-card.parent{
+  background:linear-gradient(135deg, rgba(141,162,201,0.16), rgba(255,255,255,0.95));
+}
+
+.role-card.child{
+  background:linear-gradient(135deg, rgba(216,168,184,0.16), rgba(255,255,255,0.95));
+}
+
+.role-text h3{
+  font-size:22px;
+  margin-bottom:8px;
+  color:#2f3443;
+}
+
+.role-text p{
+  font-size:14px;
+  color:#6e7380;
+  line-height:1.7;
+}
+
+.icon{
+  font-size:38px;
+}
+
+/* Auth Pages */
+.auth-wrapper{
+  max-width:500px;
+  margin:auto;
+}
+
+.auth-card{
+  background:rgba(255,255,255,0.93);
+  border-radius:28px;
+  padding:35px 28px;
+  box-shadow:0 15px 35px rgba(58, 67, 92, 0.12);
+  backdrop-filter:blur(8px);
+}
+
+.auth-header{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.small-logo{
+  max-width:160px;
+  margin-bottom:18px;
+}
+
+.auth-title{
+  font-size:30px;
+  color:#2f3443;
+  margin-bottom:10px;
+}
+
+.auth-subtitle{
+  color:#6f7686;
+  font-size:15px;
+  line-height:1.8;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:8px;
+  color:#404758;
+  font-size:15px;
+  font-weight:bold;
+}
+
+.form-group input{
+  width:100%;
+  padding:14px 16px;
+  border:1.8px solid #d8ddeb;
+  border-radius:14px;
+  background:#fbfcff;
+  outline:none;
+  font-size:15px;
+  transition:0.2s;
+}
+
+.form-group input:focus{
+  border-color:#8da2c9;
+  box-shadow:0 0 0 4px rgba(141,162,201,0.15);
+}
+
+.main-btn{
+  width:100%;
+  border:none;
+  border-radius:14px;
+  padding:15px;
+  background:linear-gradient(135deg, #8da2c9, #d8a8b8);
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.25s;
+  box-shadow:0 10px 20px rgba(141,162,201,0.22);
+}
+
+.main-btn:hover{
+  transform:translateY(-2px);
+  opacity:0.96;
+}
+
+.switch-text{
+  margin-top:16px;
+  text-align:center;
+  color:#6f7686;
+  font-size:14px;
+}
+
+.switch-link{
+  color:#8da2c9;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.switch-link:hover{
+  text-decoration:underline;
+}
+
+.back-link-wrap{
+  text-align:center;
+  margin-top:20px;
+}
+
+.back-link{
+  text-decoration:none;
+  color:#6b7fa8;
+  font-size:14px;
+  font-weight:bold;
+}
+
+/* Home Page */
+.home-page{
+  max-width:900px;
+  margin:auto;
+}
+.top-bar{
+  display:flex;
+  justify-content:flex-start;
+  margin-bottom:10px;
+}
+
+.logo-center{
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+}
+
+.top-logo{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  background:white;
+  padding:18px;
+  object-fit:contain;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.logout-btn{
+  border:none;
+  background:#ffffff;
+  color:#6b7fa8;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+}
+
+.home-card{
+  background:rgba(255,255,255,0.93);
+  border-radius:30px;
+  padding:40px;
+  box-shadow:0 15px 35px rgba(58, 67, 92, 0.12);
+}
+
+.home-title{
+  font-size:34px;
+  color:#2f3443;
+  margin-bottom:12px;
+}
+
+.home-subtitle{
+  font-size:18px;
+  color:#667085;
+  line-height:1.8;
+  margin-bottom:30px;
+}
+
+.child-summary{
+  background:linear-gradient(135deg, rgba(141,162,201,0.12), rgba(216,168,184,0.12));
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:28px;
+}
+
+.child-summary h3{
+  color:#2f3443;
+  margin-bottom:14px;
+  font-size:22px;
+}
+
+.child-summary p{
+  color:#5b6272;
+  font-size:16px;
+  margin-bottom:10px;
+}
+
+.big-btn{
+  max-width:320px;
+}
+
+.home-actions{
+  display:flex;
+  justify-content:flex-start;
+}
+
+/* Responsive */
+@media (max-width:768px){
+  .container,
+  .home-card,
+  .auth-card{
+    padding:24px;
+  }
+
+  .welcome-title,
+  .home-title,
+  .auth-title{
+    font-size:28px;
+  }
+
+  .welcome-text,
+  .home-subtitle{
+    font-size:17px;
+  }
+
+  .role-grid{
+    grid-template-columns:1fr;
+  }
+
+  .role-card{
+    flex-direction:row;
+  }
+
+  .top-bar{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .big-btn{
+    max-width:100%;
+  }
 }
 
 /* =========================
-   HELPERS
+   QUESTIONNAIRE 
 ========================= */
 
-function goBackHome() {
-  window.location.href = "home.html";
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+
+.questionnaire-page-body,
+.questionnaire-page-body *{
+  font-family: "Cairo", sans-serif;
 }
 
-function getAssessment() {
-  return JSON.parse(localStorage.getItem("maddadAssessment")) || null;
+.questionnaire-page{
+  min-height: 100vh;
+  width: 100%;
+  padding: 18px 20px 40px;
 }
 
-function saveAssessment(data) {
-  localStorage.setItem("maddadAssessment", JSON.stringify(data));
+.questionnaire-page-body{
+  margin: 0;
+  min-height: 100vh;
+  background: #F3F8FF;
+  font-family: "Cairo", sans-serif;
+  overflow-x: hidden;
 }
 
-const skillKeys = [
-  "response_to_name",
-  "eye_contact",
-  "social_smile",
-  "imitation",
-  "discrimination",
-  "pointing_with_finger",
-  "facial_expressions",
-  "joint_attention",
-  "play_skills",
-  "response_to_commands"
-];
-
-const skillLabelsArabic = {
-  response_to_name: "الاستجابة للاسم",
-  eye_contact: "التواصل البصري",
-  social_smile: "الابتسامة الاجتماعية",
-  imitation: "التقليد",
-  discrimination: "التمييز",
-  pointing_with_finger: "الإشارة بالإصبع",
-  facial_expressions: "تعابير الوجه",
-  joint_attention: "الانتباه المشترك",
-  play_skills: "مهارات اللعب",
-  response_to_commands: "تنفيذ الأوامر"
-};
-
-function calculateScore(answersObj) {
-  let score = 0;
-  skillKeys.forEach(key => {
-    score += Number(answersObj[key] || 0);
-  });
-  return score;
+.questionnaire-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  direction: ltr;
+  margin-bottom: 40px;
+  background: #FFFFFF;
+  height: 86px;
+  padding: 0 22px;
+  border-bottom: 1px solid #E2E8F2;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  width: calc(100% + 40px);
+  margin-right: -20px;
+  margin-left: -20px;
 }
 
-function classifyRisk(ageGroup, score) {
-  if (ageGroup === "12-18") {
-    if (score <= 2) return "low";
-    if (score >= 3 && score <= 5) return "medium";
-    return "high";
+.questionnaire-back{
+  border: none;
+  background: transparent;
+  color: #7D7A87;
+  font-size: 42px;
+  cursor: pointer;
+  font-family: "Cairo", sans-serif;
+  line-height: 1;
+  padding: 0;
+}
+
+.questionnaire-logo{
+  width: 86px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+
+.questionnaire-main{
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.questionnaire-main-title{
+  margin: 50px 0 38px;
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: #1E1B24;
+}
+
+.questionnaire-progress{
+  font-size: 18px;
+  font-weight: 700;
+  color: #3559A8;
+  margin-bottom: 22px;
+}
+
+.form-page{
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.questionnaire-card{
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.questionnaire-question{
+  font-size: 22px;
+  font-weight: 700;
+  color: #1E1B24;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.questionnaire-description{
+  font-size: 17px;
+  line-height: 2;
+  color: #2B2B2B;
+  margin: 0 0 22px;
+}
+
+.questionnaire-options{
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.questionnaire-option{
+  width: 100%;
+  min-height: 68px;
+  border: none;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: #222;
+  font-family: "Cairo", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(118, 130, 154, 0.22);
+  transition: 0.2s ease;
+}
+
+.questionnaire-option.selected{
+  background: #AAB9D3;
+  color: #FFFFFF;
+}
+
+.questionnaire-next-wrap{
+  display: flex;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.questionnaire-next-btn{
+  min-width: 160px;
+  height: 54px;
+  border: none;
+  border-radius: 999px;
+  background: #6E89BC;
+  color: #FFFFFF;
+  font-family: "Cairo", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.questionnaire-error{
+  min-height: 24px;
+  margin: 8px 0 0;
+  color: #C0392B;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 768px){
+  .questionnaire-page{
+    padding: 16px 14px 30px;
   }
 
-  if (ageGroup === "19-24") {
-    if (score <= 2) return "low";
-    if (score >= 3 && score <= 4) return "medium";
-    return "high";
+  .questionnaire-main-title{
+    font-size: 28px;
+    line-height: 1.8;
+    margin: 35px 0 28px;
   }
 
-  if (ageGroup === "25-30") {
-    if (score <= 1) return "low";
-    if (score >= 2 && score <= 4) return "medium";
-    return "high";
+  .questionnaire-progress{
+    font-size: 16px;
   }
 
-  if (ageGroup === "31-36") {
-    if (score <= 1) return "low";
-    if (score >= 2 && score <= 3) return "medium";
-    return "high";
+  .questionnaire-question{
+    font-size: 20px;
   }
 
-  return "low";
-}
-
-function riskTextArabic(risk) {
-  if (risk === "low") return "منخفضة";
-  if (risk === "medium") return "متوسطة";
-  return "مرتفعة";
-}
-
-function getFailedSkills(answersObj) {
-  return skillKeys.filter(key => Number(answersObj[key]) === 1);
-}
-
-/* =========================
-   QUESTIONNAIRE PAGE
-========================= */
-
-
-const questionnaireSteps = [
-  {
-    key: "ageGroup",
-    title: "كم عمر طفلك؟",
-    description: "",
-    options: [
-      { label: "12 - 18 شهر", value: "12-18" },
-      { label: "19 - 24 شهر", value: "19-24" },
-      { label: "25 - 30 شهر", value: "25-30" },
-      { label: "31 - 36 شهر", value: "31-36" }
-    ]
-  },
-  {
-    key: "gender",
-    title: "ما جنس الطفل؟",
-    description: "",
-    options: [
-      { label: "ذكر", value: "ذكر" },
-      { label: "أنثى", value: "أنثى" }
-    ]
-  },
-  {
-    key: "response_to_name",
-    title: "الاستجابة للاسم",
-    description: "يستجيب طفلك عند مناداته باسمه، يلتفت أو ينظر إليك.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "eye_contact",
-    title: "التواصل البصري",
-    description: "يتواصل طفلك معك بصريًا / ينظر إليك لمدة 3 - 5 ثوانٍ أثناء لعبك، غنائك، أو تحدثك معه.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "social_smile",
-    title: "الابتسامة الاجتماعية",
-    description: "عندما يستيقظ طفلك صباحًا، أو عند مقابلة أحد الوالدين أو الأشخاص المألوفين؛ فإنه يبتسم لك / لهم.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "imitation",
-    title: "التقليد",
-    description: "يحاول طفلك تقليد أفعالك أو أفعال الأشخاص من حوله.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "discrimination",
-    title: "التمييز",
-    description: "يشير طفلك إلى أعضاء جسمه عند سؤاله ويميز الأدوات اليومية والأشخاص.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "pointing_with_finger",
-    title: "الإشارة بالإصبع",
-    description: "عند رغبة طفلك بالحصول على شيء أو لفت الانتباه؛ فإنه يشير إليه بإصبعه.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "facial_expressions",
-    title: "تعابير الوجه",
-    description: "يميز طفلك مشاعر الآخرين ويعطي ردة فعل مناسبة حسب الموقف.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "joint_attention",
-    title: "الانتباه المشترك",
-    description: "يحضر طفلك لعبة مهتمًا بها ويُريها للآخرين وينتظر تفاعلهم.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "play_skills",
-    title: "مهارات اللعب",
-    description: "يندمج طفلك في اللعب الوظيفي أو التخيلي.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  },
-  {
-    key: "response_to_commands",
-    title: "تنفيذ الأوامر",
-    description: "يتبع طفلك الأوامر اليومية البسيطة.",
-    options: [
-      { label: "نعم", value: "0" },
-      { label: "لا", value: "1" }
-    ]
-  }
-];
-
-let currentQuestionIndex = 0;
-let questionnaireAnswers = {};
-
-function loadQuestionnairePage() {
-  const loggedIn = localStorage.getItem("maddadLoggedIn");
-  const savedAccount = JSON.parse(localStorage.getItem("maddadAccount"));
-
-  if (loggedIn !== "true" || !savedAccount) {
-    window.location.href = "parent.html";
-    return;
+  .questionnaire-description{
+    font-size: 15px;
   }
 
-  const savedProgress = JSON.parse(localStorage.getItem("maddadQuestionnaireProgress"));
-  if (savedProgress) {
-    currentQuestionIndex = savedProgress.currentQuestionIndex || 0;
-    questionnaireAnswers = savedProgress.answers || {};
-  } else {
-    currentQuestionIndex = 0;
-    questionnaireAnswers = {};
+  .questionnaire-option{
+    min-height: 62px;
+    font-size: 17px;
   }
 
-  renderQuestionStep();
-}
-
-function startQuestionnaire() {
-  localStorage.removeItem("maddadQuestionnaireProgress");
-  localStorage.removeItem("maddadAssessment");
-  window.location.href = "questionnaire.html";
-}
-
-function resetQuestionnaireAndGoHome() {
-  localStorage.removeItem("maddadQuestionnaireProgress");
-  localStorage.removeItem("maddadAssessment");
-  currentQuestionIndex = 0;
-  questionnaireAnswers = {};
-  window.location.href = "home.html";
-}
-function renderQuestionStep() {
-  const step = questionnaireSteps[currentQuestionIndex];
-  if (!step) return;
-
-  const progress = document.getElementById("questionProgress");
-  const title = document.getElementById("questionTitle");
-  const description = document.getElementById("questionDescription");
-  const optionsBox = document.getElementById("questionOptions");
-  const error = document.getElementById("questionnaireError");
-
-  if (error) error.textContent = "";
-
-  progress.textContent = `السؤال: ${currentQuestionIndex + 1}/${questionnaireSteps.length}`;
-  title.textContent = step.title;
-  description.textContent = step.description || "";
-
-  optionsBox.innerHTML = "";
-
-  step.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "questionnaire-option";
-
-    if (questionnaireAnswers[step.key] === option.value) {
-      btn.classList.add("selected");
-    }
-
-    btn.textContent = option.label;
-    btn.onclick = () => selectQuestionOption(step.key, option.value);
-
-    optionsBox.appendChild(btn);
-  });
-
-  localStorage.setItem("maddadQuestionnaireProgress", JSON.stringify({
-    currentQuestionIndex,
-    answers: questionnaireAnswers
-  }));
-}
-
-function selectQuestionOption(key, value) {
-  questionnaireAnswers[key] = value;
-  renderQuestionStep();
-}
-
-function goNextQuestion() {
-  const step = questionnaireSteps[currentQuestionIndex];
-  const error = document.getElementById("questionnaireError");
-
-  if (!questionnaireAnswers[step.key]) {
-    if (error) error.textContent = "يرجى اختيار إجابة قبل المتابعة.";
-    return;
+  .questionnaire-next-btn{
+    min-width: 140px;
+    height: 50px;
+    font-size: 17px;
   }
 
-  if (currentQuestionIndex < questionnaireSteps.length - 1) {
-    currentQuestionIndex++;
-    renderQuestionStep();
-  } else {
-    finishQuestionnaire();
+  .questionnaire-logo{
+    width: 68px;
+  }
+
+  .questionnaire-back{
+    font-size: 34px;
   }
 }
 
-function finishQuestionnaire() {
-  const answers = {
-    response_to_name: Number(questionnaireAnswers.response_to_name),
-    eye_contact: Number(questionnaireAnswers.eye_contact),
-    social_smile: Number(questionnaireAnswers.social_smile),
-    imitation: Number(questionnaireAnswers.imitation),
-    discrimination: Number(questionnaireAnswers.discrimination),
-    pointing_with_finger: Number(questionnaireAnswers.pointing_with_finger),
-    facial_expressions: Number(questionnaireAnswers.facial_expressions),
-    joint_attention: Number(questionnaireAnswers.joint_attention),
-    play_skills: Number(questionnaireAnswers.play_skills),
-    response_to_commands: Number(questionnaireAnswers.response_to_commands)
-  };
-
-  const score = calculateScore(answers);
-  const initialRisk = classifyRisk(questionnaireAnswers.ageGroup, score);
-  const failedSkills = getFailedSkills(answers);
-
-  const assessment = {
-    ageGroup: questionnaireAnswers.ageGroup,
-    gender: questionnaireAnswers.gender,
-    initialAnswers: answers,
-    currentAnswers: { ...answers },
-    initialScore: score,
-    initialRisk: initialRisk,
-    failedSkills: failedSkills,
-    followupNeeded: (initialRisk === "medium" || initialRisk === "high"),
-    followupComplete: false,
-    finalScore: score,
-    finalRisk: initialRisk
-  };
-
-  saveAssessment(assessment);
-  localStorage.removeItem("maddadQuestionnaireProgress");
-  window.location.href = "result.html";
-}
 
 /* =========================
    RESULT PAGE
 ========================= */
 
-function loadResultPage() {
-  const assessment = getAssessment();
-  if (!assessment) {
-    window.location.href = "questionnaire.html";
-    return;
-  }
-
-  const resultBadge = document.getElementById("resultBadge");
-  const resultTitle = document.getElementById("resultTitle");
-  const resultText = document.getElementById("resultText");
-  const resultSummary = document.getElementById("resultSummary");
-  const resultMainBtn = document.getElementById("resultMainBtn");
-
-  let shownRisk = assessment.initialRisk;
-  let shownScore = assessment.initialScore;
-  let message = "";
-  let btnText = "";
-
-  if (assessment.followupComplete) {
-    shownRisk = assessment.finalRisk;
-    shownScore = assessment.finalScore;
-  }
-
-  if (shownRisk === "low") {
-    resultBadge.style.background = "#E8F6EE";
-    resultBadge.style.color = "#2E7D32";
-    resultTitle.textContent = "النتيجة: خطورة منخفضة";
-    message = "تشير النتيجة الحالية إلى أن طفلك يُظهر مؤشرات مطمئنة، مع الاستمرار في المتابعة الدورية.";
-    btnText = "العودة للرئيسية";
-  } else if (shownRisk === "medium") {
-    resultBadge.style.background = "#FFF5DB";
-    resultBadge.style.color = "#9C6B00";
-    resultTitle.textContent = "النتيجة: خطورة متوسطة";
-    message = assessment.followupComplete
-      ? "بعد أسئلة المتابعة، ما زالت هناك بعض المؤشرات التي تحتاج متابعة واهتمام."
-      : "ظهرت بعض المؤشرات التي تحتاج إلى توضيح إضافي عبر أسئلة المتابعة.";
-    btnText = assessment.followupComplete ? "الأنشطة المقترحة" : "الانتقال لأسئلة المتابعة";
-  } else {
-    resultBadge.style.background = "#FDECEC";
-    resultBadge.style.color = "#C62828";
-    resultTitle.textContent = "النتيجة: خطورة مرتفعة";
-    message = assessment.followupComplete
-      ? "بعد أسئلة المتابعة، ما زالت هناك مؤشرات مرتفعة تستحق متابعة متخصصة."
-      : "ظهرت مؤشرات مرتفعة وتحتاج إلى أسئلة متابعة لإعطاء صورة أدق.";
-    btnText = assessment.followupComplete ? "الأنشطة المقترحة" : "الانتقال لأسئلة المتابعة";
-  }
-
-  resultText.textContent = message;
-
-  resultSummary.innerHTML = `
-    <strong>عمر الطفل:</strong> ${assessment.ageGroup} شهر تقريبًا<br>
-    <strong>مجموع الإجابات (لا):</strong> ${shownScore}<br>
-    <strong>مستوى الخطورة:</strong> ${riskTextArabic(shownRisk)}
-  `;
-
-  resultMainBtn.textContent = btnText;
+.result-page{
+width:100%;
+max-width:1000px;
+margin:auto;
+padding:30px 20px 50px;
 }
 
-function handleResultMainAction() {
-  const assessment = getAssessment();
-  if (!assessment) {
-    window.location.href = "questionnaire.html";
-    return;
-  }
+.result-card{
+background:white;
+border-radius:32px;
+padding:45px 35px;
+box-shadow:0 14px 35px rgba(0,0,0,0.08);
+text-align:center;
+}
 
-  if (!assessment.followupComplete && (assessment.initialRisk === "medium" || assessment.initialRisk === "high")) {
-    window.location.href = "followup.html";
-  } else {
-    window.location.href = "games.html";
+.result-badge{
+display:inline-block;
+padding:10px 18px;
+border-radius:999px;
+font-size:15px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.result-title{
+font-size:44px;
+color:#2F3443;
+margin-bottom:14px;
+}
+
+.result-text{
+font-size:24px;
+line-height:1.9;
+color:#5a6478;
+max-width:800px;
+margin:0 auto 24px;
+}
+
+.result-summary{
+background:#f7f8fc;
+border-radius:20px;
+padding:22px;
+font-size:18px;
+line-height:2;
+color:#4d5668;
+margin-bottom:25px;
+text-align:right;
+}
+
+/* =========================
+   FOLLOWUP PAGE — alias classes to match questionnaire styles exactly
+========================= */
+
+.question-progress{
+  font-size: 18px;
+  font-weight: 700;
+  color: #3559A8;
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.question-title{
+  font-size: 22px;
+  font-weight: 700;
+  color: #1E1B24;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.question-description{
+  font-size: 17px;
+  line-height: 2;
+  color: #2B2B2B;
+  margin: 0 0 22px;
+  text-align: center;
+}
+
+.question-options{
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.questionnaire-nav{
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 34px;
+}
+
+@media (max-width: 768px){
+  .question-title{
+    font-size: 20px;
+  }
+  .question-description{
+    font-size: 15px;
+  }
+  .question-progress{
+    font-size: 16px;
   }
 }
 
 /* =========================
-   FOLLOWUP PAGE
+   GAMES + ACCOUNT PAGES
 ========================= */
 
-let followupSteps = [];
-let currentFollowupIndex = 0;
-let followupCollectedAnswers = {};
-
-function loadFollowupPage() {
-  const assessment = getAssessment();
-
-  if (!assessment) {
-    window.location.href = "questionnaire.html";
-    return;
-  }
-
-  if (assessment.initialRisk === "low") {
-    window.location.href = "result.html";
-    return;
-  }
-
-  const failed = assessment.failedSkills || [];
-  followupSteps = [];
-  followupCollectedAnswers = {};
-  followupBtnState = {};
-  currentFollowupIndex = 0;
-
-  if (failed.includes("eye_contact"))        followupSteps.push("eye_contact");
-  if (failed.includes("response_to_name"))   followupSteps.push("response_to_name");
-  if (failed.includes("pointing_with_finger")) followupSteps.push("pointing_with_finger");
-  if (failed.includes("imitation"))          followupSteps.push("imitation");
-  if (failed.includes("discrimination"))     followupSteps.push("discrimination");
-
-  if (followupSteps.length === 0) {
-    document.getElementById("followupContainer").innerHTML = `
-      <div class="followup-section">
-        <h3>لا توجد أسئلة متابعة مدعومة حاليًا</h3>
-        <div class="followup-main-question">
-          المهارات التي تحتاج متابعة إضافية سيتم دعمها في الخطوة القادمة.
-        </div>
-      </div>
-    `;
-    return;
-  }
-
-  renderFollowupStep();
+.app-shell{
+  width:100%;
+  max-width:1100px;
+  min-height:720px;
+  background:#ececf1;
+  border:8px solid #d7cfe0;
+  border-radius:34px;
+  padding:16px;
+  box-shadow:0 12px 30px rgba(70, 78, 99, 0.10);
 }
 
-/* followup button state: { fieldName: Set([values]) or string for radio } */
-let followupBtnState = {};
-
-const FOLLOWUP_STEPS_CONFIG = {
-  eye_contact: {
-    title: "متابعة: التواصل البصري",
-    question: "هل طفلك يناظر عينك؟",
-    type: "checkbox",
-    name: "eye_contact_context",
-    options: [
-      { label: "لما يحتاج شيء",        value: "needs"    },
-      { label: "لما يلعب معك",          value: "play"     },
-      { label: "أثناء الأكل",           value: "eating"   },
-      { label: "أثناء اللبس",           value: "dressing" },
-      { label: "عندما تقرأ له قصة",     value: "story"    },
-      { label: "عندما تتحدث معه",       value: "talking"  }
-    ],
-    subQuestion: {
-      id: "eyeSubBox",
-      title: "لما أنت وطفلك سوا خلال اليوم، هل ينظر إلى عينك على الأقل 5 ثوانٍ؟",
-      name: "eye_contact_sub"
-    }
-  },
-  response_to_name: {
-    title: "متابعة: الاستجابة للاسم",
-    question: "هل طفلك يستجيب لاسمه في مواقف أخرى حتى لو لم يكن الأمر ثابتًا؟ على سبيل المثال، قد يستجيب في الحديقة أو عند الحماس، لكنه لا يستجيب عند مشاهدة التلفاز أو عند تركيزه الشديد على نشاط ما.",
-    type: "radio",
-    name: "response_to_name_followup",
-    options: [
-      { label: "نعم", value: "yes" },
-      { label: "لا",  value: "no"  }
-    ]
-  },
-  pointing_with_finger: {
-    title: "متابعة: الإشارة بالإصبع",
-    question: "اختاري ما ينطبق على طفلك:",
-    type: "checkbox",
-    name: "pointing_context",
-    options: [
-      { label: "هل طفلك يمد يده للأشياء؟",                       value: "hand"  },
-      { label: "هل يقودك بيده نحو الشيء؟",                       value: "lead"  },
-      { label: "هل يحاول أخذ الشيء بنفسه؟",                      value: "take"  },
-      { label: "هل يطلب الشيء باستخدام كلمات أو أصوات؟",         value: "voice" }
-    ],
-    subQuestion: {
-      id: "pointSubBox",
-      title: 'إذا قلت له "وريني"، هل سيشير طفلك إلى الشيء؟',
-      name: "pointing_sub"
-    }
-  },
-  imitation: {
-    title: "متابعة: التقليد",
-    question: "اختاري ما ينطبق على طفلك:",
-    type: "checkbox",
-    name: "imitation_context",
-    options: [
-      { label: "هل يخرج لسانه؟",                                                          value: "tongue" },
-      { label: "هل يصدر أصواتاً مضحكة؟",                                                  value: "sounds" },
-      { label: 'هل يلوح قاصداً "وداعاً"؟ (أو يشير لـ "وداعاً"؟)',                        value: "wave"   },
-      { label: "هل يصفق بيده؟",                                                            value: "clap"   },
-      { label: 'هل يضع إصبعه على شفتيه كإشارة لـ "السكوت"/"الصمت"؟',                     value: "shush"  },
-      { label: "هل يرسل قبلة في الهواء؟",                                                  value: "kiss"   },
-      { label: "أخرى (صف)",                                                                value: "other", isOther: true }
-    ]
-  },
-  discrimination: {
-    title: "متابعة: التمييز",
-    question: "اختاري ما ينطبق على طفلك:",
-    type: "checkbox",
-    name: "discrimination_context",
-    options: [
-      { label: 'التعرّف على جزء من جسمهم عندما تسأل "أين أنفك؟" أو "أين عينك؟"',          value: "body_part"    },
-      { label: 'الالتفات أو النظر إلى والد أو شقيق عندما تذكر اسمهم "أين ماما؟"',         value: "look_person"  },
-      { label: 'الإشارة إلى غرض مألوف ويومي (مثل كرسي أو مصباح) عندما تسأل "أين الكرسي؟"', value: "point_object" },
-      { label: 'إحضار غرض مألوف ويومي (مثل ملعقة أو بطانية) عندما تطلب منهم "أحضر الملعقة"', value: "bring_object" },
-      { label: "أخرى (اذكر)",                                                              value: "other", isOther: true }
-    ]
-  }
-};
-
-function renderFollowupStep() {
-  const container = document.getElementById("followupContainer");
-  const skill  = followupSteps[currentFollowupIndex];
-  const total  = followupSteps.length;
-  const isLast  = currentFollowupIndex === total - 1;
-  const isFirst = currentFollowupIndex === 0;
-  const step    = FOLLOWUP_STEPS_CONFIG[skill];
-
-  // Ensure state exists for this field
-  if (!followupBtnState[step.name]) {
-    followupBtnState[step.name] = step.type === "radio" ? "" : new Set();
-  }
-  if (step.subQuestion && !followupBtnState[step.subQuestion.name]) {
-    followupBtnState[step.subQuestion.name] = "";
-  }
-
-  /* ---- Build main options ---- */
-  let optionsHtml = "";
-  step.options.forEach(opt => {
-    const isSelected = step.type === "radio"
-      ? followupBtnState[step.name] === opt.value
-      : followupBtnState[step.name].has(opt.value);
-
-    optionsHtml += `
-      <button type="button"
-        class="questionnaire-option${isSelected ? " selected" : ""}"
-        data-field="${step.name}"
-        data-value="${opt.value}"
-        data-type="${step.type}"
-        ${opt.isOther ? 'data-is-other="true"' : ""}
-        onclick="handleFollowupOptionClick(this)">
-        ${opt.label}
-      </button>
-    `;
-    if (opt.isOther) {
-      const isOtherSelected = step.type === "radio"
-        ? followupBtnState[step.name] === "other"
-        : followupBtnState[step.name].has("other");
-      optionsHtml += `
-        <div id="${step.name}_other_box" style="display:${isOtherSelected ? "block" : "none"}; margin-top:-6px; padding: 0 2px 8px;">
-          <input type="text" id="${step.name}_other_text"
-            placeholder="اكتب هنا..."
-            style="width:100%; padding:10px 14px; border:1.5px solid #c5d5ee; border-radius:12px; font-size:15px; font-family:inherit; direction:rtl; background:#fff; outline:none; box-sizing:border-box;">
-        </div>
-      `;
-    }
-  });
-
-  /* ---- Build sub-question (eye_contact / pointing_with_finger) ---- */
-  let subHtml = "";
-  if (step.subQuestion) {
-    const checkedCount = followupBtnState[step.name].size;
-    const subVisible   = checkedCount === 1;
-    const subName      = step.subQuestion.name;
-
-    let subOptHtml = "";
-    ["yes", "no"].forEach(val => {
-      const lbl = val === "yes" ? "نعم" : "لا";
-      const sel = followupBtnState[subName] === val;
-      subOptHtml += `
-        <button type="button"
-          class="questionnaire-option${sel ? " selected" : ""}"
-          data-field="${subName}"
-          data-value="${val}"
-          data-type="radio"
-          onclick="handleFollowupOptionClick(this)">
-          ${lbl}
-        </button>
-      `;
-    });
-
-    subHtml = `
-      <div id="${step.subQuestion.id}" style="display:${subVisible ? "block" : "none"}; margin-top:28px;">
-        <div class="question-title" style="font-size:16px; margin-bottom:16px;">
-          ${step.subQuestion.title}
-        </div>
-        <div id="${subName}_options">
-          ${subOptHtml}
-        </div>
-      </div>
-    `;
-  }
-
-  container.innerHTML = `
-    <div id="questionProgress" class="question-progress">
-      السؤال: ${currentFollowupIndex + 1}/${total}
-    </div>
-    <div class="question-title">${step.title}</div>
-    <div class="question-description">${step.question}</div>
-    <div id="questionOptions">
-      ${optionsHtml}
-    </div>
-    ${subHtml}
-    <div id="questionnaireError" style="color:red; text-align:center; margin-top:12px; min-height:20px; font-size:14px;"></div>
-    <div style="display:flex; justify-content:center; gap:16px; margin-top:28px;">
-      ${!isFirst ? `<button type="button" class="questionnaire-next-btn" onclick="goPrevFollowup()">السابق</button>` : ""}
-      <button type="button" class="questionnaire-next-btn" onclick="goNextFollowup()">${isLast ? "إرسال" : "التالي"}</button>
-    </div>
-  `;
+.browser-bar{
+  height:56px;
+  background:#f6f6f8;
+  border:1px solid #e2e5ee;
+  border-radius:18px 18px 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
 }
 
-function handleFollowupOptionClick(btn) {
-  const field   = btn.dataset.field;
-  const value   = btn.dataset.value;
-  const type    = btn.dataset.type;
-  const isOther = btn.dataset.isOther === "true";
-
-  if (type === "radio") {
-    // Deselect all buttons with same field, select clicked
-    document.querySelectorAll(`[data-field="${field}"]`).forEach(b => b.classList.remove("selected"));
-    btn.classList.add("selected");
-    followupBtnState[field] = value;
-  } else {
-    // Checkbox: toggle
-    if (followupBtnState[field].has(value)) {
-      followupBtnState[field].delete(value);
-      btn.classList.remove("selected");
-    } else {
-      followupBtnState[field].add(value);
-      btn.classList.add("selected");
-    }
-
-    // Show/hide "other" text box
-    if (isOther) {
-      const otherBox = document.getElementById(`${field}_other_box`);
-      if (otherBox) otherBox.style.display = followupBtnState[field].has("other") ? "block" : "none";
-      if (!followupBtnState[field].has("other")) {
-        const otherTxt = document.getElementById(`${field}_other_text`);
-        if (otherTxt) otherTxt.value = "";
-      }
-    }
-
-    // Show/hide sub-question when count === 1 (eye_contact / pointing_with_finger)
-    const skill = followupSteps[currentFollowupIndex];
-    const step  = FOLLOWUP_STEPS_CONFIG[skill];
-    if (step.subQuestion && step.name === field) {
-      const subBox = document.getElementById(step.subQuestion.id);
-      if (subBox) subBox.style.display = followupBtnState[field].size === 1 ? "block" : "none";
-      // Reset sub-answer when hidden
-      if (followupBtnState[field].size !== 1) {
-        followupBtnState[step.subQuestion.name] = "";
-        document.querySelectorAll(`[data-field="${step.subQuestion.name}"]`)
-          .forEach(b => b.classList.remove("selected"));
-      }
-    }
-  }
+.browser-left,
+.browser-right{
+  display:flex;
+  align-items:center;
+  gap:14px;
 }
 
-function goNextFollowup() {
-  const error = document.getElementById("questionnaireError");
-  if (error) error.textContent = "";
-
-  const skill = followupSteps[currentFollowupIndex];
-  const step  = FOLLOWUP_STEPS_CONFIG[skill];
-
-  // --- Validate & score current step using followupBtnState ---
-
-  if (skill === "eye_contact") {
-    const count = followupBtnState[step.name] ? followupBtnState[step.name].size : 0;
-    if (count === 0) {
-      followupCollectedAnswers.eye_contact = 1;
-    } else if (count >= 2) {
-      followupCollectedAnswers.eye_contact = 0;
-    } else {
-      const subVal = followupBtnState[step.subQuestion.name];
-      if (!subVal) {
-        if (error) error.textContent = "يرجى استكمال سؤال المتابعة الخاص بالتواصل البصري.";
-        return;
-      }
-      followupCollectedAnswers.eye_contact = subVal === "yes" ? 0 : 1;
-    }
-  }
-
-  else if (skill === "response_to_name") {
-    const val = followupBtnState[step.name];
-    if (!val) {
-      if (error) error.textContent = "يرجى الإجابة على سؤال متابعة الاستجابة للاسم.";
-      return;
-    }
-    followupCollectedAnswers.response_to_name = val === "yes" ? 0 : 1;
-  }
-
-  else if (skill === "pointing_with_finger") {
-    const count = followupBtnState[step.name] ? followupBtnState[step.name].size : 0;
-    if (count === 0) {
-      followupCollectedAnswers.pointing_with_finger = 1;
-    } else if (count >= 2) {
-      followupCollectedAnswers.pointing_with_finger = 0;
-    } else {
-      const subVal = followupBtnState[step.subQuestion.name];
-      if (!subVal) {
-        if (error) error.textContent = "يرجى استكمال سؤال المتابعة الخاص بالإشارة بالإصبع.";
-        return;
-      }
-      followupCollectedAnswers.pointing_with_finger = subVal === "yes" ? 0 : 1;
-    }
-  }
-
-  else if (skill === "imitation") {
-    const count = followupBtnState[step.name] ? followupBtnState[step.name].size : 0;
-    followupCollectedAnswers.imitation = count >= 2 ? 0 : 1;
-  }
-
-  else if (skill === "discrimination") {
-    const count = followupBtnState[step.name] ? followupBtnState[step.name].size : 0;
-    followupCollectedAnswers.discrimination = count >= 2 ? 0 : 1;
-  }
-
-  // --- Advance or finalize ---
-  if (currentFollowupIndex < followupSteps.length - 1) {
-    currentFollowupIndex++;
-    renderFollowupStep();
-  } else {
-    finalizeFollowup();
-  }
+.browser-icon{
+  font-size:18px;
+  color:#5c6270;
 }
 
-function goPrevFollowup() {
-  if (currentFollowupIndex > 0) {
-    currentFollowupIndex--;
-    renderFollowupStep();
-  }
+.browser-avatar{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#6a6271;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
 }
 
-function finalizeFollowup() {
-  const assessment = getAssessment();
-  if (!assessment) {
-    window.location.href = "questionnaire.html";
-    return;
-  }
-
-  const updatedAnswers = { ...assessment.currentAnswers, ...followupCollectedAnswers };
-  const finalScore = calculateScore(updatedAnswers);
-  const finalRisk = classifyRisk(assessment.ageGroup, finalScore);
-
-  assessment.currentAnswers = updatedAnswers;
-  assessment.finalScore = finalScore;
-  assessment.finalRisk = finalRisk;
-  assessment.followupComplete = true;
-
-  saveAssessment(assessment);
-  window.location.href = "result.html";
+.browser-logo{
+  height:28px;
+  object-fit:contain;
 }
 
-function submitFollowup(event) {
-  if (event) event.preventDefault();
-  // Navigation is now handled by goNextFollowup() / goPrevFollowup()
+.app-body{
+  display:flex;
+  gap:16px;
+  background:#eef0f8;
+  border-radius:0 0 26px 26px;
+  padding:14px;
 }
 
+.side-panel{
+  width:92px;
+  min-width:92px;
+  background:#f9f9fb;
+  border-radius:24px;
+  padding:18px 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:22px;
+}
 
-document.addEventListener("DOMContentLoaded", function () {
-  const gamesContainer = document.getElementById("gamesContainer");
-  if (!gamesContainer) return;
+.side-menu{
+  font-size:32px;
+  color:#5f6675;
+  margin-top:6px;
+}
 
-  const assessment = JSON.parse(localStorage.getItem("maddadAssessment"));
-  if (!assessment || !assessment.currentAnswers) return;
+.side-tabs{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:8px;
+}
 
-  const answers = assessment.currentAnswers;
+.side-tab{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  color:#555b68;
+  font-size:14px;
+}
 
-  const responseGame = document.getElementById("responseGame");
-  const eyeContactGame = document.getElementById("eyeContactGame");
+.side-tab-icon{
+  width:44px;
+  height:44px;
+  border-radius:16px;
+  background:#ece7f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+}
 
-  if (responseGame) responseGame.style.display = "none";
-  if (eyeContactGame) eyeContactGame.style.display = "none";
+.side-tab.active .side-tab-icon{
+  background:#d8c9ef;
+  color:#5d4798;
+}
 
-  const hasWeakResponse = Number(answers.response_to_name) === 1;
-  const hasWeakEye = Number(answers.eye_contact) === 1;
+.main-panel{
+  flex:1;
+  background:#f6f6f7;
+  border-radius:30px;
+  padding:22px 26px 30px;
+  min-height:620px;
+}
 
-  if (hasWeakResponse && responseGame) {
-    responseGame.style.display = "flex";
+.inner-topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:26px;
+}
+
+.inner-topbar-left,
+.inner-topbar-right{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.back-arrow{
+  font-size:34px;
+  color:#2f3443;
+  text-decoration:none;
+}
+
+.section-mini-title{
+  font-size:22px;
+  color:#2f3443;
+  font-weight:bold;
+}
+
+.top-action{
+  font-size:28px;
+  color:#444a57;
+}
+
+.page-main-title{
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  color:#20242f;
+  margin-bottom:34px;
+}
+
+.game-layout{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:48px;
+  margin-top:30px;
+}
+
+.game-visual{
+  flex:0 0 260px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.game-visual img{
+  max-width:240px;
+  width:100%;
+  height:auto;
+}
+
+.game-details{
+  max-width:520px;
+}
+
+.game-title{
+  font-size:28px;
+  font-weight:bold;
+  color:#222733;
+  margin-bottom:12px;
+}
+
+.game-description{
+  font-size:18px;
+  line-height:1.9;
+  color:#3d4350;
+  margin-bottom:22px;
+}
+
+.game-btn,
+.account-btn{
+  border:none;
+  background:#6f56b3;
+  color:#fff;
+  border-radius:999px;
+  padding:14px 30px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(111, 86, 179, 0.22);
+}
+
+.game-btn:hover,
+.account-btn:hover{
+  opacity:0.95;
+}
+
+.account-header{
+  text-align:center;
+  margin-bottom:24px;
+}
+
+.account-title{
+  font-size:30px;
+  font-weight:bold;
+  color:#1f2430;
+  margin-bottom:6px;
+}
+
+.account-avatar{
+  font-size:56px;
+  color:#1f2430;
+}
+
+.account-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:28px;
+  margin-top:24px;
+}
+
+.info-card{
+  background:#fff;
+  border-radius:20px;
+  padding:26px 24px;
+  box-shadow:0 10px 18px rgba(0,0,0,0.10);
+  min-height:150px;
+}
+
+.info-card.center-card{
+  grid-column:1 / -1;
+  max-width:420px;
+  margin:0 auto;
+  text-align:center;
+}
+
+.info-card-title{
+  font-size:26px;
+  font-weight:bold;
+  color:#1f2430;
+  margin-bottom:14px;
+}
+
+.info-card-text{
+  font-size:18px;
+  line-height:1.9;
+  color:#2e3440;
+}
+
+.account-actions{
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  margin-top:34px;
+}
+
+@media (max-width: 900px){
+  .app-shell{
+    min-height:auto;
+    padding:10px;
   }
 
-  if (hasWeakEye && eyeContactGame) {
-    eyeContactGame.style.display = "flex";
+  .app-body{
+    flex-direction:column;
   }
 
-  if (!hasWeakResponse && !hasWeakEye) {
-    gamesContainer.innerHTML = `
-      <div class="game-layout" style="justify-content:center;">
-        <div class="game-details" style="text-align:center;">
-          <div class="game-title">لا توجد أنشطة مقترحة حالياً</div>
-          <div class="game-description">
-            لم تظهر في نتيجة الطفل حاجة حالية لأنشطة خاصة بمهارتي التواصل البصري أو الاستجابة للاسم.
-          </div>
-        </div>
-      </div>
-    `;
+  .side-panel{
+    width:100%;
+    min-width:auto;
+    flex-direction:row;
+    justify-content:space-between;
+    padding:14px 16px;
   }
-});
+
+  .side-tabs{
+    flex-direction:row;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .main-panel{
+    min-height:auto;
+    padding:18px;
+  }
+
+  .game-layout{
+    flex-direction:column;
+    text-align:center;
+    gap:24px;
+  }
+
+  .account-grid{
+    grid-template-columns:1fr;
+  }
+
+  .info-card.center-card{
+    grid-column:auto;
+    max-width:none;
+  }
+
+  .account-actions{
+    flex-direction:column;
+    gap:14px;
+  }
+}
