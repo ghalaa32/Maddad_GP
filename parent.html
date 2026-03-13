@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>مدد | تسجيل ولي الأمر</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .field-error { color: red !important; }
+  </style>
 </head>
 <body class="bg-main">
   <div class="bg-blur bg-blur-top"></div>
@@ -48,7 +51,7 @@
           />
           <span class="field-error" id="loginPasswordError"></span>
         </div>
-        <button class="main-btn" onclick="parentLogin()">تسجيل الدخول</button>
+        <button class="main-btn" onclick="submitLogin()">تسجيل الدخول</button>
         <p class="switch-text">
           ما عندك حساب؟
           <span class="switch-link" onclick="showSignup()">إنشاء حساب</span>
@@ -102,7 +105,7 @@
           />
           <span class="field-error" id="signupPasswordError"></span>
         </div>
-        <button class="main-btn" onclick="parentSignup()">إنشاء الحساب</button>
+        <button class="main-btn" onclick="submitSignup()">إنشاء الحساب</button>
         <p class="switch-text">
           عندك حساب؟
           <span class="switch-link" onclick="showLogin()">تسجيل الدخول</span>
@@ -150,6 +153,39 @@
         error.textContent = "الاسم يجب أن يحتوي على حروف فقط";
       } else {
         error.textContent = "";
+      }
+    }
+
+    function submitLogin() {
+      const emailInput = document.getElementById("parentLoginEmail");
+      const passwordInput = document.getElementById("parentLoginPassword");
+
+      validateEmail(emailInput, "loginEmailError");
+      validatePassword(passwordInput, "loginPasswordError");
+
+      const emailValid = !document.getElementById("loginEmailError").textContent;
+      const passwordValid = !document.getElementById("loginPasswordError").textContent;
+
+      if (emailValid && passwordValid) {
+        parentLogin();
+      }
+    }
+
+    function submitSignup() {
+      const nameInput = document.getElementById("signupChildName");
+      const emailInput = document.getElementById("signupEmail");
+      const passwordInput = document.getElementById("signupPassword");
+
+      validateName(nameInput, "signupNameError");
+      validateEmail(emailInput, "signupEmailError");
+      validatePassword(passwordInput, "signupPasswordError");
+
+      const nameValid = !document.getElementById("signupNameError").textContent;
+      const emailValid = !document.getElementById("signupEmailError").textContent;
+      const passwordValid = !document.getElementById("signupPasswordError").textContent;
+
+      if (nameValid && emailValid && passwordValid) {
+        parentSignup();
       }
     }
   </script>
